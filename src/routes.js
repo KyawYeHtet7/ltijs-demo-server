@@ -21,7 +21,9 @@ router.post('/grade', async (req, res) => {
     // Selecting linetItem ID
     let lineItemId = idtoken.platformContext.endpoint.lineitem // Attempting to retrieve it from idtoken
     if (!lineItemId) {
-      const response = await lti.Grade.getLineItems(idtoken, { resourceLinkId: true })
+      const response = await lti.Grade.getLineItems(idtoken, {
+        resourceLinkId: true
+      })
       const lineItems = response.lineItems
       if (lineItems.length === 0) {
         // Creating line item if there is none
@@ -38,7 +40,11 @@ router.post('/grade', async (req, res) => {
     }
 
     // Sending Grade
-    const responseGrade = await lti.Grade.submitScore(idtoken, lineItemId, gradeObj)
+    const responseGrade = await lti.Grade.submitScore(
+      idtoken,
+      lineItemId,
+      gradeObj
+    )
     return res.send(responseGrade)
   } catch (err) {
     console.log(err.message)
@@ -64,15 +70,25 @@ router.post('/deeplink', async (req, res) => {
     const resource = req.body
 
     const items = {
-      type: 'ltiResourceLink',
+      type: 'link',
       title: 'Ltijs Demo',
+      url: 'https://www.google.com',
+      window: {
+        targetName: 'ltijs',
+        width: 800,
+        height: 600
+      },
       custom: {
         name: resource.name,
         value: resource.value
       }
     }
 
-    const form = await lti.DeepLinking.createDeepLinkingForm(res.locals.token, items, { message: 'Successfully Registered' })
+    const form = await lti.DeepLinking.createDeepLinkingForm(
+      res.locals.token,
+      items,
+      { message: 'Successfully Registered' }
+    )
     if (form) return res.send(form)
     return res.sendStatus(500)
   } catch (err) {
@@ -105,7 +121,7 @@ router.get('/info', async (req, res) => {
   const token = res.locals.token
   const context = res.locals.context
 
-  const info = { }
+  const info = {}
   if (token.userInfo) {
     if (token.userInfo.name) info.name = token.userInfo.name
     if (token.userInfo.email) info.email = token.userInfo.email
@@ -118,6 +134,8 @@ router.get('/info', async (req, res) => {
 })
 
 // Wildcard route to deal with redirecting to React routes
-router.get('*', (req, res) => res.sendFile(path.join(__dirname, '../public/index.html')))
+router.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '../public/index.html'))
+)
 
 module.exports = router

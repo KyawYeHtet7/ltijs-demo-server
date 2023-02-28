@@ -40,7 +40,7 @@ const setup = async () => {
   /**
    * Register platform
    */
-  await lti.registerPlatform({
+  /* await lti.registerPlatform({
     url: 'https://canvas.instructure.com',
     name: 'ltijs-demo-server',
     clientId: '10000000000016',
@@ -51,7 +51,7 @@ const setup = async () => {
       method: 'JWK_SET',
       key: 'https://canvas-lms.pagewerkz.com/api/lti/security/jwks'
     }
-  })
+  }) */
 }
 
 setup()
