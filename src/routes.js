@@ -72,7 +72,7 @@ router.post('/deeplink', async (req, res) => {
     const items = {
       type: 'link',
       title: 'Ltijs Demo',
-      url: 'https://www.google.com',
+      url: 'https://test-hello.free.beeceptor.com/',
       window: {
         targetName: 'ltijs',
         width: 800,
