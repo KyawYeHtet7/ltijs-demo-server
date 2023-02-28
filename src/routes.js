@@ -72,7 +72,7 @@ router.post('/deeplink', async (req, res) => {
     const items = {
       type: 'link',
       title: 'Ltijs Demo',
-      url: 'https://test-hello.free.beeceptor.com/',
+      url: 'https://ltijs-demo-server.onrender.com/checkAuth',
       window: {
         targetName: 'ltijs',
         width: 800,
@@ -91,6 +91,16 @@ router.post('/deeplink', async (req, res) => {
     )
     if (form) return res.send(form)
     return res.sendStatus(500)
+  } catch (err) {
+    console.log(err.message)
+    return res.status(500).send(err.message)
+  }
+})
+
+router.get('/checkAuth', async (req, res) => {
+  try {
+    console.log('Checking auth')
+    console.log('Req', req)
   } catch (err) {
     console.log(err.message)
     return res.status(500).send(err.message)
